@@ -16,7 +16,7 @@ parameters = pika.ConnectionParameters('ec2-54-149-173-164.us-west-2.compute.ama
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
-channel.queue_declare(queue='politik_politicians')
+channel.queue_declare(queue='politik_test')
 
 channel.basic_publish(exchange='', routing_key='politik_politicians', body=text)
 
