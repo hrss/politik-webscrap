@@ -19,11 +19,11 @@ def json_print_file(politic_json_dict={}):
 def webscrap_propositions():
     header = {'Content-Type': 'application/json' }
     
-    #api_url = "https://dadosabertos.camara.leg.br/api/v2/propositions?ordem=ASC&ordenarPor=id"
+    api_url = "https://dadosabertos.camara.leg.br/api/v2/propositions?ordem=ASC&ordenarPor=id"
     #api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?siglaTipo=PEC%2CPL&ordem=ASC&ordenarPor=id"
     
     #na requisicao da swagger temos siglaTipo = PL,PEC idSituacao = 924 Pronta para Pauta
-    api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?siglaTipo=PEC%2CPL&idSituacao=924&ordem=ASC&ordenarPor=id"
+    #api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?siglaTipo=PEC%2CPL&idSituacao=924&ordem=ASC&ordenarPor=id"
     n_api_url = ''
     
     response = requests.get(api_url, headers=header)

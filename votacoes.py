@@ -16,7 +16,7 @@ def json_print_file(politic_json_dict={}):
     with open("arqeuivovotacoes.json",'w') as f:
         json.dump(politic_json_dict, f)
 
-def webscrap_propositions():
+def webscrap_votacoes():
     header = {'Content-Type': 'application/json' }
     
     #api_url = "https://dadosabertos.camara.leg.br/api/v2/propositions?ordem=ASC&ordenarPor=id"
@@ -56,7 +56,7 @@ def webscrap_propositions():
     propositions_with_n_votes["dados"] = []
     
     #we get the ids of the propositions wich we have at our db
-    url = "https://c6d68e29.ngrok.io/api/non_voted"
+    url = "https://c6d68e29.ngrok.io/api/non_voted";#debug
     
     response = requests.get(url, headers=header)
     
@@ -81,8 +81,8 @@ def webscrap_propositions():
     
     for i in propositions_with_n_votes["dados"]:
         #For each proposition we check the list of vote sections
-        propo_id = str(2170090)
-        api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes/"+ propo_id + "/votacoes";#str(2170090) +"/votacoes"
+        propo_id = str(2170090);#debug
+        api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes/"+ propo_id + "/votacoes";#str(2170090) +"/votacoes";#debug
         
         response = requests.get(api_url, headers=header)
         if(response.status_code != 200):
@@ -131,9 +131,9 @@ def webscrap_propositions():
                 
         connection.close()
         
-        break
+        break;#debug
         
 
 if __name__ == "__main__":
-    webscrap_propositions()
+    webscrap_votacoes()
     

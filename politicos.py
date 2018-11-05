@@ -35,7 +35,7 @@ def webscrap_politicos():
         
         for x in json_objt["dados"] : politicians["dados"].append(x)
         
-        print(api_url,n_api_url)
+        print(api_url)
         api_url = n_api_url
         
         for i in json_objt["links"]:
