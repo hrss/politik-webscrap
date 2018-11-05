@@ -15,10 +15,8 @@ import pika
 
 app = Celery('tasks', broker='amqp://guest:guest@ec2-54-149-173-164.us-west-2.compute.amazonaws.com:5672')
 
-
 @app.task
 def webscrap_politicians():
-    print("politicians started")
     header = {'Content-Type': 'application/json' }
     
     api_url = "https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome"
@@ -71,7 +69,6 @@ def webscrap_politicians():
 
 @app.task
 def webscrap_propositions():
-    print("propositions started")
     header = {'Content-Type': 'application/json' }
     
     api_url = "https://dadosabertos.camara.leg.br/api/v2/propositions?ordem=ASC&ordenarPor=id"
@@ -92,11 +89,12 @@ def webscrap_propositions():
         
         api_url = n_api_url
         
+        '''
         for i in json_objt["links"]:
             if i["rel"] == "next":
                 n_api_url = i["href"]
                 response = requests.get(n_api_url, headers=header)
-        
+        '''
                 
     if(response.status_code != 200):
         print("Page Resquested Error:", response.status_code, "At url:" , api_url)
@@ -124,7 +122,6 @@ def webscrap_propositions():
 
 @app.task
 def webscrap_last_votes():
-    print("last votes started")
     url = "https://dadosabertos.camara.leg.br/api/v2/votacoes?ordem=ASC&ordenarPor=id"
     header = {'Content-Type': 'application/json' }
     
@@ -183,6 +180,7 @@ def webscrap_last_votes():
                         if i["rel"] == "next":
                             n_url = i["href"]
                             response = requests.get(n_url, headers=header)
+                    
                 #print(json.dumps(vote,indent=2));#debug
                
                 text = json.dumps(vote)
@@ -204,8 +202,9 @@ def webscrap_last_votes():
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    # Calls test('hello') every 10 seconds.
     '''
+    # Calls test('hello') every 10 seconds.
+    sender.add_periodic_task(10.0, test.s('hello'), name='add every 10')
     # Calls test('world') every 30 seconds
     sender.add_periodic_task(30.0, test.s('world'), expires=10)
 

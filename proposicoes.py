@@ -19,7 +19,7 @@ def json_print_file(politic_json_dict={}):
 def webscrap_propositions():
     header = {'Content-Type': 'application/json' }
     
-    api_url = "https://dadosabertos.camara.leg.br/api/v2/propositions?ordem=ASC&ordenarPor=id"
+    api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?ordem=DESC&ordenarPor=id"
     #api_url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?siglaTipo=PEC%2CPL&ordem=ASC&ordenarPor=id"
     
     #na requisicao da swagger temos siglaTipo = PL,PEC idSituacao = 924 Pronta para Pauta
@@ -37,11 +37,12 @@ def webscrap_propositions():
         
         api_url = n_api_url
         
+        '''
         for i in json_objt["links"]:
             if i["rel"] == "next":
                 n_api_url = i["href"]
                 response = requests.get(n_api_url, headers=header)
-        
+        '''
                 
     if(response.status_code != 200):
         print("Page Resquested Error:", response.status_code, "At url:" , api_url)
@@ -50,6 +51,8 @@ def webscrap_propositions():
         for i in propositions["dados"]:
             i["ementa"] = unidecode(i["ementa"])
             
+        print(json.dumps(propositions,indent=2))
+'''            
         text = json.dumps(propositions)
         
         credentials = pika.PlainCredentials('guest', 'guest')
@@ -66,7 +69,7 @@ def webscrap_propositions():
         channel.basic_publish(exchange='', routing_key='politik_law_projects', body=text)
                 
         connection.close()
-    
+'''    
 
 if __name__ == "__main__":
     webscrap_propositions()
