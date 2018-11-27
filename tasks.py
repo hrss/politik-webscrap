@@ -232,8 +232,6 @@ def webscrap_last_votes_xml_service():
             if child.tag == 'codProposicao':
                 prop_list.append(child.text)
 
-    print(prop_list)
-
     votacoes_ids = []
 
     for prop in prop_list:
