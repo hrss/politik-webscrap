@@ -292,7 +292,7 @@ def webscrap_last_votes_xml_service():
 
 
     votacoes_ids = []
-    print(prop_list)
+
     for prop in prop_list:
 
         url = "https://dadosabertos.camara.leg.br/api/v2/proposicoes/" + prop + "/votacoes"
@@ -351,11 +351,10 @@ def webscrap_last_votes_xml_service():
             text = json.dumps(vote)
 
 
-            print(text)
-
             channel.basic_publish(exchange='', routing_key='politik_votes', body=text)
 
     connection.close()
+    print("Finished last votes")
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
